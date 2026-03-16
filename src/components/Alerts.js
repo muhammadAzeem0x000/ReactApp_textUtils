@@ -3,17 +3,16 @@ import { useTheme } from '../context/ThemeContext';
 export default function Alert() {
   const { alert } = useTheme();
 
-  const typeClass = alert
-    ? `alert-${alert.type.toLowerCase() === 'danger' ? 'danger' : 'success'}`
-    : '';
+  if (!alert) return null;
+
+  const isSuccess = alert.type.toLowerCase() !== 'danger';
 
   return (
-    <div className="alert-container" style={{ minHeight: '48px' }}>
-      {alert && (
-        <div className={`alert ${typeClass} alert-dismissible fade show`} role="alert">
-          <strong>{alert.type}:</strong> {alert.message}
-        </div>
-      )}
+    <div className="toast-container">
+      <div className={`toast-alert ${isSuccess ? 'toast-success' : 'toast-danger'}`}>
+        <span className={`toast-dot ${isSuccess ? 'dot-success' : 'dot-danger'}`}></span>
+        <span className="toast-message">{alert.message}</span>
+      </div>
     </div>
   );
 }

@@ -10,8 +10,8 @@ function App() {
     <Router>
       <ThemeProvider>
         <Navbar title="TextUtils" aboutText="About" />
+        <Alert />
         <div className="container my-3">
-          <Alert />
           <Routes>
             <Route path="/about" element={<About />} />
             <Route path="/" element={<TextForm heading="Enter the text to analyze" />} />
