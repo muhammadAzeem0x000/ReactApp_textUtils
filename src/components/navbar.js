@@ -7,7 +7,7 @@ export default function Navbar({ title = 'TextUtils', aboutText = 'About' }) {
   const isDark = mode === 'dark';
 
   return (
-    <nav className={`navbar navbar-expand-lg ${isDark ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`}
+    <nav className={`navbar navbar-expand-lg sticky-top ${isDark ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`}
          style={{ backgroundColor: isDark ? 'var(--bg-navbar)' : 'var(--bg-navbar)' }}>
       <div className="container-fluid">
         <Link className="navbar-brand fw-bold" to="/">
