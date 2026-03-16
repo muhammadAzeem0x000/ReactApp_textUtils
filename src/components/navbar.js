@@ -4,11 +4,13 @@ import { useTheme } from '../context/ThemeContext';
 export default function Navbar({ title = 'TextUtils', aboutText = 'About' }) {
   const { mode, toggleMode } = useTheme();
   const location = useLocation();
+  const isDark = mode === 'dark';
 
   return (
-    <nav className="navbar navbar-expand-lg">
+    <nav className={`navbar navbar-expand-lg ${isDark ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`}
+         style={{ backgroundColor: isDark ? 'var(--bg-navbar)' : 'var(--bg-navbar)' }}>
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand fw-bold" to="/">
           {title}
         </Link>
         <button
@@ -42,19 +44,21 @@ export default function Navbar({ title = 'TextUtils', aboutText = 'About' }) {
               </Link>
             </li>
           </ul>
-          <div className="form-check form-switch">
-            <input
-              className="form-check-input"
-              onChange={toggleMode}
-              type="checkbox"
-              role="switch"
-              id="darkModeSwitch"
-              checked={mode === 'dark'}
-              aria-label="Toggle dark mode"
-            />
-            <label className="form-check-label" htmlFor="darkModeSwitch">
-              {mode === 'dark' ? '☀️ Light' : '🌙 Dark'}
-            </label>
+          <div className="d-flex align-items-center">
+            <div className="form-check form-switch mb-0">
+              <input
+                className="form-check-input"
+                onChange={toggleMode}
+                type="checkbox"
+                role="switch"
+                id="darkModeSwitch"
+                checked={isDark}
+                aria-label="Toggle dark mode"
+              />
+              <label className="form-check-label" htmlFor="darkModeSwitch">
+                {isDark ? '☀️ Light' : '🌙 Dark'}
+              </label>
+            </div>
           </div>
         </div>
       </div>
