@@ -1,6 +1,6 @@
 import { useMemo, useState, useCallback } from 'react';
 import { useTheme } from '../context/ThemeContext';
-import { countWords, getReadingTime, removeExtraSpaces, toTitleCase, reverseText } from '../utils/textHelpers';
+import { countWords, getReadingTime, removeExtraSpaces, toTitleCase, reverseText, toBoldText, fromBoldText } from '../utils/textHelpers';
 
 export default function TextForm({ heading }) {
   const [text, setText] = useState('');
@@ -34,6 +34,16 @@ export default function TextForm({ heading }) {
   const handleRemoveSpaces = () => {
     setText(removeExtraSpaces(text));
     showAlert('Extra spaces removed', 'Success');
+  };
+
+  const handleBold = () => {
+    setText(toBoldText(text));
+    showAlert('Converted to 𝗕𝗼𝗹𝗱 text', 'Success');
+  };
+
+  const handleUnbold = () => {
+    setText(fromBoldText(text));
+    showAlert('Converted back to normal text', 'Success');
   };
 
   const handleCopy = async () => {
@@ -82,6 +92,12 @@ export default function TextForm({ heading }) {
           </button>
           <button disabled={isDisabled} className="btn btn-secondary" onClick={handleRemoveSpaces}>
             Remove Spaces
+          </button>
+          <button disabled={isDisabled} className="btn btn-bold" onClick={handleBold}>
+            𝗕 Bold
+          </button>
+          <button disabled={isDisabled} className="btn btn-bold-outline" onClick={handleUnbold}>
+            Unbold
           </button>
           <button disabled={isDisabled} className="btn btn-info" onClick={handleCopy}>
             📋 Copy
