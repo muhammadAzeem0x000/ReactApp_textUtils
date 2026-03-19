@@ -2,7 +2,7 @@ import { useRef, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 
-export default function Navbar({ title = 'TextUtils', aboutText = 'About' }) {
+export default function Navbar({ title = 'UpworkBold', aboutText = 'About' }) {
   const { mode, toggleMode } = useTheme();
   const location = useLocation();
   const isDark = mode === 'dark';

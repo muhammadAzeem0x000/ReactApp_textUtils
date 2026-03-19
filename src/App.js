@@ -9,7 +9,7 @@ function App() {
   return (
     <Router>
       <ThemeProvider>
-        <Navbar title="TextUtils" aboutText="About" />
+        <Navbar title="UpworkBold" aboutText="About" />
         <Alert />
         <div className="container my-3">
           <Routes>

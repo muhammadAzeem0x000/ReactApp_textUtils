@@ -14,7 +14,7 @@ export default function About() {
     <div className="about-container">
       <div className="about-hero">
         <h1 className="about-title">
-          About <span className="about-title-accent">TextUtils</span>
+          About <span className="about-title-accent">UpworkBold</span>
         </h1>
         <p className="about-subtitle">
           A free, fast, and privacy-friendly text utility — built with React.
