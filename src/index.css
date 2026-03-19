@@ -77,11 +77,19 @@ hr {
 
 /* ─── Navbar Overrides (on top of Bootstrap) ── */
 .navbar {
-  background-color: var(--bg-navbar) !important;
-  border-bottom: 1px solid var(--border-color);
+  background-color: rgba(255, 255, 255, 0.7) !important;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(226, 232, 240, 0.6);
   box-shadow: var(--shadow-sm);
   transition: background-color var(--transition-speed) ease,
-              border-color var(--transition-speed) ease;
+              border-color var(--transition-speed) ease,
+              backdrop-filter var(--transition-speed) ease;
+}
+
+[data-theme='dark'] .navbar {
+  background-color: rgba(30, 41, 59, 0.7) !important;
+  border-bottom-color: rgba(51, 65, 85, 0.5);
 }
 
 .navbar .navbar-brand {
