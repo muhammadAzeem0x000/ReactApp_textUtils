@@ -1,3 +1,4 @@
+import { useRef, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 
@@ -5,12 +6,27 @@ export default function Navbar({ title = 'TextUtils', aboutText = 'About' }) {
   const { mode, toggleMode } = useTheme();
   const location = useLocation();
   const isDark = mode === 'dark';
+  const collapseRef = useRef(null);
+
+  // Close the mobile hamburger menu when a nav link is clicked
+  const collapseNav = useCallback(() => {
+    const el = collapseRef.current;
+    if (el && el.classList.contains('show')) {
+      // Use Bootstrap's Collapse API if available, otherwise toggle classes manually
+      const bsCollapse = window.bootstrap?.Collapse?.getInstance(el);
+      if (bsCollapse) {
+        bsCollapse.hide();
+      } else {
+        el.classList.remove('show');
+      }
+    }
+  }, []);
 
   return (
     <nav className={`navbar navbar-expand-lg sticky-top ${isDark ? 'navbar-dark bg-dark' : 'navbar-light bg-light'}`}
          style={{ backgroundColor: isDark ? 'var(--bg-navbar)' : 'var(--bg-navbar)' }}>
       <div className="container-fluid">
-        <Link className="navbar-brand fw-bold" to="/">
+        <Link className="navbar-brand fw-bold" to="/" onClick={collapseNav}>
           {title}
         </Link>
         <button
@@ -24,13 +40,14 @@ export default function Navbar({ title = 'TextUtils', aboutText = 'About' }) {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className="collapse navbar-collapse" id="navbarSupportedContent">
+        <div className="collapse navbar-collapse" id="navbarSupportedContent" ref={collapseRef}>
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
               <Link
                 className={`nav-link ${location.pathname === '/' ? 'active' : ''}`}
                 aria-current={location.pathname === '/' ? 'page' : undefined}
                 to="/"
+                onClick={collapseNav}
               >
                 Home
               </Link>
@@ -39,6 +56,7 @@ export default function Navbar({ title = 'TextUtils', aboutText = 'About' }) {
               <Link
                 className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}
                 to="/about"
+                onClick={collapseNav}
               >
                 {aboutText}
               </Link>
