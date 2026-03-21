@@ -29,17 +29,26 @@ export default function Navbar({ title = 'UpworkBold', aboutText = 'About' }) {
         <Link className="navbar-brand fw-bold" to="/" onClick={collapseNav}>
           {title}
         </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
+        <div className="d-flex align-items-center gap-2 d-lg-none">
+          <button 
+            className="mobile-theme-toggle" 
+            onClick={toggleMode}
+            aria-label="Toggle dark mode"
+          >
+            {isDark ? '☀️' : '🌙'}
+          </button>
+          <button
+            className="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span className="navbar-toggler-icon"></span>
+          </button>
+        </div>
         <div className="collapse navbar-collapse" id="navbarSupportedContent" ref={collapseRef}>
           <ul className="navbar-nav me-auto mb-2 mb-lg-0">
             <li className="nav-item">
@@ -62,7 +71,7 @@ export default function Navbar({ title = 'UpworkBold', aboutText = 'About' }) {
               </Link>
             </li>
           </ul>
-          <div className="d-flex align-items-center">
+          <div className="d-none d-lg-flex align-items-center">
             <div className="form-check form-switch mb-0">
               <input
                 className="form-check-input"

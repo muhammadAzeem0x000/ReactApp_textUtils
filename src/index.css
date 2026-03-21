@@ -133,6 +133,23 @@ hr {
   height: 1.5em;
 }
 
+.mobile-theme-toggle {
+  background: transparent;
+  border: none;
+  font-size: 1.25rem;
+  padding: 0.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color var(--transition-speed) ease;
+}
+
+.mobile-theme-toggle:hover {
+  background-color: var(--bg-secondary);
+}
+
 /* ─── Toast Notification ── */
 .toast-container {
   position: fixed;
