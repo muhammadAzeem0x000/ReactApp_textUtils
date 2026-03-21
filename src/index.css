@@ -544,7 +544,14 @@ hr {
   font-weight: 700;
 }
 
-.about-github-link {
+.about-social-links {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.about-social-link {
   display: flex;
   align-items: center;
   gap: 0.5rem;
@@ -558,7 +565,7 @@ hr {
   transition: all var(--transition-speed) ease;
 }
 
-.about-github-link:hover {
+.about-social-link:hover {
   background-color: rgba(255, 255, 255, 0.3);
   transform: translateY(-2px);
   color: #fff;
