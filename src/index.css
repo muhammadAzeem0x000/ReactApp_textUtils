@@ -514,11 +514,18 @@ hr {
 .about-credit-card {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.75rem;
   background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
   border-radius: var(--radius);
   padding: 1rem 1.5rem;
   box-shadow: var(--shadow-md);
+}
+
+.about-credit-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
 }
 
 .about-credit-emoji {
@@ -535,6 +542,26 @@ hr {
 .about-credit-text strong {
   color: #fff;
   font-weight: 700;
+}
+
+.about-github-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+  background-color: rgba(255, 255, 255, 0.2);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  transition: all var(--transition-speed) ease;
+}
+
+.about-github-link:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-2px);
+  color: #fff;
 }
 
 /* ─── Responsive ── */
@@ -567,5 +594,11 @@ hr {
 
   .about-title {
     font-size: 1.6rem;
+  }
+
+  .about-credit-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
   }
 }
