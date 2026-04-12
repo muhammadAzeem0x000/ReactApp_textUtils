@@ -64,14 +64,14 @@ export default function TextForm({ heading }) {
   const isDisabled = text.length === 0;
 
   const fontOptions = [
-    { label: 'Font: Default', value: 'inherit' },
-    { label: 'Font: Arial', value: 'Arial, sans-serif' },
-    { label: 'Font: Times New Roman', value: '"Times New Roman", Times, serif' },
-    { label: 'Font: Courier New', value: '"Courier New", Courier, monospace' },
-    { label: 'Font: Verdana', value: 'Verdana, Geneva, sans-serif' },
-    { label: 'Font: Georgia', value: 'Georgia, serif' },
-    { label: 'Font: Trebuchet MS', value: '"Trebuchet MS", Helvetica, sans-serif' },
-    { label: 'Font: Impact', value: 'Impact, Charcoal, sans-serif' }
+    { label: 'Default', value: 'inherit' },
+    { label: 'Arial', value: 'Arial, sans-serif' },
+    { label: 'Times New Roman', value: '"Times New Roman", Times, serif' },
+    { label: 'Courier New', value: '"Courier New", Courier, monospace' },
+    { label: 'Verdana', value: 'Verdana, Geneva, sans-serif' },
+    { label: 'Georgia', value: 'Georgia, serif' },
+    { label: 'Trebuchet MS', value: '"Trebuchet MS", Helvetica, sans-serif' },
+    { label: 'Impact', value: 'Impact, Charcoal, sans-serif' }
   ];
 
   return (
@@ -79,18 +79,27 @@ export default function TextForm({ heading }) {
       <div className="text-form-container">
         <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3">
           <h1 className="text-form-heading mb-0">{heading}</h1>
-          <select 
-            className="form-select font-select-modern"
-            title="Select a font"
-            value={fontFamily} 
-            onChange={(e) => setFontFamily(e.target.value)}
-          >
-            {fontOptions.map((font) => (
-              <option key={font.value} value={font.value} style={{ fontFamily: font.value }}>
-                {font.label}
-              </option>
-            ))}
-          </select>
+          <div className="position-relative d-flex align-items-center">
+            <span 
+              className="position-absolute text-muted" 
+              style={{ left: '0.8rem', pointerEvents: 'none', fontWeight: 600, fontSize: '0.95rem' }}
+            >
+              Font:
+            </span>
+            <select 
+              className="form-select font-select-modern"
+              title="Select a font"
+              value={fontFamily} 
+              onChange={(e) => setFontFamily(e.target.value)}
+              style={{ paddingLeft: '3.2rem', minWidth: '160px' }}
+            >
+              {fontOptions.map((font) => (
+                <option key={font.value} value={font.value} style={{ fontFamily: font.value }}>
+                  {font.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <div className="mb-3">
           <textarea
