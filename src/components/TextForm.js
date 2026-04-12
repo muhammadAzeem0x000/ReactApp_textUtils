@@ -80,8 +80,8 @@ export default function TextForm({ heading }) {
         <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3">
           <h1 className="text-form-heading mb-0">{heading}</h1>
           <select 
-            className="form-select" 
-            style={{ width: 'auto', minWidth: '150px', cursor: 'pointer' }}
+            className="form-select font-select-modern"
+            title="Select a font"
             value={fontFamily} 
             onChange={(e) => setFontFamily(e.target.value)}
           >
