@@ -81,17 +81,17 @@ export default function TextForm({ heading }) {
           <h1 className="text-form-heading mb-0">{heading}</h1>
           <div className="position-relative d-flex align-items-center">
             <span 
-              className="position-absolute text-muted" 
-              style={{ left: '0.8rem', pointerEvents: 'none', fontWeight: 600, fontSize: '0.95rem' }}
+              className="position-absolute" 
+              style={{ left: '1rem', pointerEvents: 'none', fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-muted)' }}
             >
               Font:
             </span>
             <select 
-              className="form-select font-select-modern"
+              className="form-select font-select-modern position-relative"
               title="Select a font"
               value={fontFamily} 
               onChange={(e) => setFontFamily(e.target.value)}
-              style={{ paddingLeft: '3.2rem', minWidth: '160px' }}
+              style={{ paddingLeft: '3.6rem', paddingRight: '2rem', minWidth: '170px', appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none', cursor: 'pointer' }}
             >
               {fontOptions.map((font) => (
                 <option key={font.value} value={font.value} style={{ fontFamily: font.value }}>
@@ -99,6 +99,12 @@ export default function TextForm({ heading }) {
                 </option>
               ))}
             </select>
+            <span 
+              className="position-absolute" 
+              style={{ right: '1rem', pointerEvents: 'none', fontSize: '0.75rem', color: 'var(--text-muted)', zIndex: 10 }}
+            >
+              ▼
+            </span>
           </div>
         </div>
         <div className="mb-3">
