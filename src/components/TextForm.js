@@ -4,6 +4,7 @@ import { countWords, getReadingTime, removeExtraSpaces, toTitleCase, reverseText
 
 export default function TextForm({ heading }) {
   const [text, setText] = useState('');
+  const [fontFamily, setFontFamily] = useState('inherit');
   const { showAlert } = useTheme();
 
   const wordCount = useMemo(() => countWords(text), [text]);
@@ -62,10 +63,35 @@ export default function TextForm({ heading }) {
 
   const isDisabled = text.length === 0;
 
+  const fontOptions = [
+    { label: 'Default Font', value: 'inherit' },
+    { label: 'Arial', value: 'Arial, sans-serif' },
+    { label: 'Times New Roman', value: '"Times New Roman", Times, serif' },
+    { label: 'Courier New', value: '"Courier New", Courier, monospace' },
+    { label: 'Verdana', value: 'Verdana, Geneva, sans-serif' },
+    { label: 'Georgia', value: 'Georgia, serif' },
+    { label: 'Trebuchet MS', value: '"Trebuchet MS", Helvetica, sans-serif' },
+    { label: 'Impact', value: 'Impact, Charcoal, sans-serif' }
+  ];
+
   return (
     <>
       <div className="text-form-container">
-        <h1 className="text-form-heading">{heading}</h1>
+        <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3">
+          <h1 className="text-form-heading mb-0">{heading}</h1>
+          <select 
+            className="form-select" 
+            style={{ width: 'auto', minWidth: '150px', cursor: 'pointer' }}
+            value={fontFamily} 
+            onChange={(e) => setFontFamily(e.target.value)}
+          >
+            {fontOptions.map((font) => (
+              <option key={font.value} value={font.value} style={{ fontFamily: font.value }}>
+                {font.label}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="mb-3">
           <textarea
             className="form-control text-area"
@@ -73,6 +99,7 @@ export default function TextForm({ heading }) {
             onChange={handleChange}
             id="myBox"
             rows="8"
+            style={{ fontFamily }}
             placeholder="Type or paste your text here..."
           />
         </div>
@@ -125,7 +152,7 @@ export default function TextForm({ heading }) {
           </div>
         </div>
         <h3>Preview</h3>
-        <p className="text-preview">{text.length > 0 ? text : 'Nothing to preview'}</p>
+        <p className="text-preview" style={{ fontFamily }}>{text.length > 0 ? text : 'Nothing to preview'}</p>
       </div>
     </>
   );
