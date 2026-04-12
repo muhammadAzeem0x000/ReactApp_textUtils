@@ -64,14 +64,14 @@ export default function TextForm({ heading }) {
   const isDisabled = text.length === 0;
 
   const fontOptions = [
-    { label: 'Default Font', value: 'inherit' },
-    { label: 'Arial', value: 'Arial, sans-serif' },
-    { label: 'Times New Roman', value: '"Times New Roman", Times, serif' },
-    { label: 'Courier New', value: '"Courier New", Courier, monospace' },
-    { label: 'Verdana', value: 'Verdana, Geneva, sans-serif' },
-    { label: 'Georgia', value: 'Georgia, serif' },
-    { label: 'Trebuchet MS', value: '"Trebuchet MS", Helvetica, sans-serif' },
-    { label: 'Impact', value: 'Impact, Charcoal, sans-serif' }
+    { label: 'Font: Default', value: 'inherit' },
+    { label: 'Font: Arial', value: 'Arial, sans-serif' },
+    { label: 'Font: Times New Roman', value: '"Times New Roman", Times, serif' },
+    { label: 'Font: Courier New', value: '"Courier New", Courier, monospace' },
+    { label: 'Font: Verdana', value: 'Verdana, Geneva, sans-serif' },
+    { label: 'Font: Georgia', value: 'Georgia, serif' },
+    { label: 'Font: Trebuchet MS', value: '"Trebuchet MS", Helvetica, sans-serif' },
+    { label: 'Font: Impact', value: 'Impact, Charcoal, sans-serif' }
   ];
 
   return (
