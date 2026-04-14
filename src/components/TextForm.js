@@ -5,12 +5,26 @@ import { countWords, getReadingTime, removeExtraSpaces, toTitleCase, reverseText
 export default function TextForm({ heading }) {
   const [text, setText] = useState('');
   const [fontFamily, setFontFamily] = useState('inherit');
+  const [upworkMode, setUpworkMode] = useState(false);
   const { showAlert } = useTheme();
 
   const wordCount = useMemo(() => countWords(text), [text]);
   const readingTime = useMemo(() => getReadingTime(text), [text]);
 
-  const handleChange = useCallback((e) => setText(e.target.value), []);
+  const handleChange = useCallback((e) => {
+    let newVal = e.target.value;
+    if (upworkMode) {
+      newVal = toBoldText(newVal);
+      navigator.clipboard.writeText(newVal).catch(() => {});
+    }
+    setText(newVal);
+  }, [upworkMode]);
+
+  const handlePaste = useCallback((e) => {
+    if (upworkMode) {
+      showAlert('Text auto-bolded and copied!', 'Success');
+    }
+  }, [upworkMode, showAlert]);
 
   const handleUpperCase = () => {
     setText(text.toUpperCase());
@@ -79,32 +93,61 @@ export default function TextForm({ heading }) {
       <div className="text-form-container">
         <div className="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-3">
           <h1 className="text-form-heading mb-0">{heading}</h1>
-          <div className="position-relative d-flex align-items-center">
-            <span 
-              className="position-absolute" 
-              style={{ left: '1rem', pointerEvents: 'none', fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-muted)' }}
-            >
-              Font:
-            </span>
-            <select 
-              className="form-select font-select-modern position-relative"
-              title="Select a font"
-              value={fontFamily} 
-              onChange={(e) => setFontFamily(e.target.value)}
-              style={{ paddingLeft: '3.6rem', paddingRight: '2rem', minWidth: '170px', appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none', cursor: 'pointer' }}
-            >
-              {fontOptions.map((font) => (
-                <option key={font.value} value={font.value} style={{ fontFamily: font.value }}>
-                  {font.label}
-                </option>
-              ))}
-            </select>
-            <span 
-              className="position-absolute" 
-              style={{ right: '1rem', pointerEvents: 'none', fontSize: '0.75rem', color: 'var(--text-muted)', zIndex: 10 }}
-            >
-              ▼
-            </span>
+          <div className="d-flex align-items-center gap-3">
+            <div className="form-check form-switch d-flex align-items-center mb-0">
+              <input 
+                className="form-check-input mt-0" 
+                type="checkbox" 
+                role="switch" 
+                id="upworkModeSwitch" 
+                checked={upworkMode}
+                onChange={(e) => {
+                  const isChecked = e.target.checked;
+                  setUpworkMode(isChecked);
+                  showAlert(`Upwork Mode (Auto Bold) ${isChecked ? 'Enabled' : 'Disabled'}`, 'Success');
+                  if (isChecked && text.length > 0) {
+                    const bolded = toBoldText(text);
+                    setText(bolded);
+                    navigator.clipboard.writeText(bolded).catch(() => {});
+                  }
+                }}
+                style={{ width: '2.5rem', height: '1.25rem', cursor: 'pointer' }}
+              />
+              <label 
+                className="form-check-label ms-2" 
+                htmlFor="upworkModeSwitch"
+                style={{ fontWeight: 600, color: 'var(--text-primary)', cursor: 'pointer', userSelect: 'none' }}
+              >
+                Upwork Mode
+              </label>
+            </div>
+            <div className="position-relative d-flex align-items-center">
+              <span 
+                className="position-absolute" 
+                style={{ left: '1rem', pointerEvents: 'none', fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-muted)' }}
+              >
+                Font:
+              </span>
+              <select 
+                className="form-select font-select-modern position-relative"
+                title="Select a font"
+                value={fontFamily} 
+                onChange={(e) => setFontFamily(e.target.value)}
+                style={{ paddingLeft: '3.6rem', paddingRight: '2rem', minWidth: '170px', appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none', cursor: 'pointer' }}
+              >
+                {fontOptions.map((font) => (
+                  <option key={font.value} value={font.value} style={{ fontFamily: font.value }}>
+                    {font.label}
+                  </option>
+                ))}
+              </select>
+              <span 
+                className="position-absolute" 
+                style={{ right: '1rem', pointerEvents: 'none', fontSize: '0.75rem', color: 'var(--text-muted)', zIndex: 10 }}
+              >
+                ▼
+              </span>
+            </div>
           </div>
         </div>
         <div className="mb-3">
@@ -112,6 +155,7 @@ export default function TextForm({ heading }) {
             className="form-control text-area"
             value={text}
             onChange={handleChange}
+            onPaste={handlePaste}
             id="myBox"
             rows="8"
             style={{ fontFamily }}
