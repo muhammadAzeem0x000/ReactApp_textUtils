@@ -1,4 +1,4 @@
-import { useMemo, useState, useCallback } from 'react';
+import { useMemo, useState, useCallback, useEffect, useRef } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { countWords, getReadingTime, removeExtraSpaces, toTitleCase, reverseText, toBoldText, fromBoldText } from '../utils/textHelpers';
 
@@ -6,7 +6,19 @@ export default function TextForm({ heading }) {
   const [text, setText] = useState('');
   const [fontFamily, setFontFamily] = useState('inherit');
   const [upworkMode, setUpworkMode] = useState(false);
+  const [isFontDropdownOpen, setIsFontDropdownOpen] = useState(false);
+  const dropdownRef = useRef(null);
   const { showAlert } = useTheme();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsFontDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const wordCount = useMemo(() => countWords(text), [text]);
   const readingTime = useMemo(() => getReadingTime(text), [text]);
@@ -121,32 +133,67 @@ export default function TextForm({ heading }) {
                 Upwork Mode
               </label>
             </div>
-            <div className="position-relative d-flex align-items-center">
+            <div className="position-relative d-flex align-items-center" ref={dropdownRef}>
               <span 
                 className="position-absolute" 
                 style={{ left: '1rem', pointerEvents: 'none', fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-muted)' }}
               >
                 Font:
               </span>
-              <select 
-                className="form-select font-select-modern position-relative"
-                title="Select a font"
-                value={fontFamily} 
-                onChange={(e) => setFontFamily(e.target.value)}
-                style={{ paddingLeft: '3.6rem', paddingRight: '2rem', minWidth: '170px', appearance: 'none', WebkitAppearance: 'none', MozAppearance: 'none', cursor: 'pointer' }}
+              <div 
+                className={`form-select font-select-modern position-relative d-flex align-items-center ${isFontDropdownOpen ? 'focus' : ''}`}
+                onClick={() => setIsFontDropdownOpen(!isFontDropdownOpen)}
+                style={{ paddingLeft: '3.6rem', paddingRight: '2.5rem', minWidth: '170px', cursor: 'pointer', userSelect: 'none', backgroundColor: 'var(--bg-card)' }}
               >
-                {fontOptions.map((font) => (
-                  <option key={font.value} value={font.value} style={{ fontFamily: font.value }}>
-                    {font.label}
-                  </option>
-                ))}
-              </select>
+                <span style={{ fontFamily: fontFamily, display: 'inline-block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%' }}>
+                  {fontOptions.find(f => f.value === fontFamily)?.label || 'Default'}
+                </span>
+              </div>
               <span 
                 className="position-absolute" 
-                style={{ right: '1rem', pointerEvents: 'none', fontSize: '0.75rem', color: 'var(--text-muted)', zIndex: 10 }}
+                style={{ right: '1rem', pointerEvents: 'none', fontSize: '0.75rem', color: 'var(--text-muted)', zIndex: 10, transform: isFontDropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }}
               >
                 ▼
               </span>
+              
+              {isFontDropdownOpen && (
+                <div 
+                  className="custom-dropdown-menu position-absolute w-100" 
+                  style={{ 
+                    top: '100%', 
+                    left: 0, 
+                    marginTop: '0.5rem', 
+                    backgroundColor: 'var(--bg-card)', 
+                    border: '2px solid var(--border-color)', 
+                    borderRadius: 'var(--radius)', 
+                    boxShadow: 'var(--shadow-lg)', 
+                    zIndex: 1000,
+                    overflow: 'hidden'
+                  }}
+                >
+                  {fontOptions.map((font) => (
+                    <div 
+                      key={font.value} 
+                      className="custom-dropdown-item"
+                      onClick={() => {
+                        setFontFamily(font.value);
+                        setIsFontDropdownOpen(false);
+                      }}
+                      style={{ 
+                        padding: '0.5rem 1rem', 
+                        fontFamily: font.value, 
+                        cursor: 'pointer',
+                        backgroundColor: fontFamily === font.value ? 'var(--bg-secondary)' : 'transparent',
+                        color: fontFamily === font.value ? 'var(--accent-primary)' : 'var(--text-primary)',
+                        transition: 'background-color 0.2s, color 0.2s',
+                        fontWeight: fontFamily === font.value ? 600 : 500
+                      }}
+                    >
+                      {font.label}
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>
