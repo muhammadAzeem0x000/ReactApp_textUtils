@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useCallback } from 'react';
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [mode, setMode] = useState('light');
+  const [mode, setMode] = useState('dark');
   const [alert, setAlert] = useState(null);
 
   const showAlert = useCallback((message, type) => {
