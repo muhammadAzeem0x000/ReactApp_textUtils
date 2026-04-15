@@ -125,10 +125,9 @@ export default function TextForm({ heading }) {
                 }}
                 style={{ width: '2.5rem', height: '1.25rem', cursor: 'pointer' }}
               />
-              <label 
+              <div 
                 className="form-check-label ms-2 d-flex align-items-center gap-1" 
-                htmlFor="upworkModeSwitch"
-                style={{ fontWeight: 600, color: 'var(--text-primary)', cursor: 'pointer', userSelect: 'none' }}
+                style={{ fontWeight: 600, color: 'var(--text-primary)', cursor: 'default', userSelect: 'none' }}
               >
                 Upwork Mode
                 <span 
@@ -140,7 +139,7 @@ export default function TextForm({ heading }) {
                     <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
                   </svg>
                 </span>
-              </label>
+              </div>
             </div>
             <div className="position-relative d-flex align-items-center" ref={dropdownRef}>
               <span 
