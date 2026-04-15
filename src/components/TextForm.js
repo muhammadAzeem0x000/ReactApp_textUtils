@@ -7,6 +7,7 @@ export default function TextForm({ heading }) {
   const [fontFamily, setFontFamily] = useState('inherit');
   const [upworkMode, setUpworkMode] = useState(false);
   const [isFontDropdownOpen, setIsFontDropdownOpen] = useState(false);
+  const [showInfoPopup, setShowInfoPopup] = useState(false);
   const dropdownRef = useRef(null);
   const { showAlert } = useTheme();
 
@@ -131,14 +132,60 @@ export default function TextForm({ heading }) {
               >
                 Upwork Mode
                 <span 
-                  title="Automatically converts your text to bold and copies it to your clipboard. Perfect for quick pasting into Upwork!"
-                  onClick={() => alert("Upwork Mode:\n\nAutomatically converts your text to bold and copies it to your clipboard. Perfect for quick pasting into Upwork!")}
-                  style={{ cursor: 'pointer', color: 'var(--text-muted)', display: 'flex' }}
+                  title="Upwork Mode Info"
+                  onClick={() => setShowInfoPopup(!showInfoPopup)}
+                  style={{ cursor: 'pointer', color: 'var(--text-muted)', display: 'flex', position: 'relative' }}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" viewBox="0 0 16 16">
                     <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
                     <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
                   </svg>
+                  {showInfoPopup && (
+                    <div 
+                      style={{
+                        position: 'absolute',
+                        top: '150%',
+                        left: '50%',
+                        transform: 'translateX(-50%)',
+                        width: '240px',
+                        padding: '1rem',
+                        backgroundColor: 'var(--bg-card)',
+                        color: 'var(--text-secondary)',
+                        border: '1px solid var(--accent-secondary)',
+                        borderRadius: 'var(--radius)',
+                        boxShadow: 'var(--shadow-lg)',
+                        fontSize: '0.85rem',
+                        fontWeight: 400,
+                        opacity: 0.96,
+                        backdropFilter: 'blur(8px)',
+                        zIndex: 1050,
+                        textAlign: 'left',
+                        cursor: 'default',
+                        lineHeight: 1.6
+                      }}
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <div style={{ fontWeight: 600, marginBottom: '0.4rem', color: 'var(--accent-primary)', fontSize: '0.9rem' }}>Upwork Mode</div>
+                      Automatically converts your typed or pasted text to <strong>bold</strong> and instantly copies it to your clipboard.
+                      <div style={{ marginTop: '0.75rem', display: 'flex', justifyContent: 'flex-end' }}>
+                        <button 
+                          onClick={(e) => { e.stopPropagation(); setShowInfoPopup(false); }}
+                          style={{ 
+                            background: 'var(--border-color)', 
+                            border: 'none', 
+                            color: 'var(--text-primary)', 
+                            padding: '0.2rem 0.6rem',
+                            borderRadius: '6px',
+                            fontSize: '0.75rem', 
+                            cursor: 'pointer',
+                            fontWeight: 600
+                          }}
+                        >
+                          Dismiss
+                        </button>
+                      </div>
+                    </div>
+                  )}
                 </span>
               </div>
             </div>
