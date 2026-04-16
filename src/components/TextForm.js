@@ -35,7 +35,12 @@ export default function TextForm({ heading }) {
 
   const handlePaste = useCallback((e) => {
     if (upworkMode) {
-      showAlert('Text auto-bolded and copied!', 'Success');
+      e.preventDefault();
+      const pastedData = e.clipboardData.getData('text');
+      const bolded = toBoldText(pastedData);
+      setText(bolded);
+      navigator.clipboard.writeText(bolded).catch(() => {});
+      showAlert('Text overwritten, auto-bolded & copied!', 'Success');
     }
   }, [upworkMode, showAlert]);
 
