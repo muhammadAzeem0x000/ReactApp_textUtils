@@ -28,12 +28,23 @@ export default function TextForm({ heading }) {
   const handleChange = useCallback((e) => {
     if (isPastingRef.current) return;
     let newVal = e.target.value;
+    
     if (upworkMode) {
+      const lengthDiff = newVal.length - text.length;
+      if (lengthDiff > 1) {
+        if (e.nativeEvent?.data) {
+          newVal = e.nativeEvent.data;
+        } else if (newVal.endsWith(text)) {
+          newVal = newVal.substring(0, lengthDiff);
+        } else if (newVal.startsWith(text)) {
+          newVal = newVal.substring(text.length);
+        }
+      }
       newVal = toBoldText(newVal);
       navigator.clipboard.writeText(newVal).catch(() => {});
     }
     setText(newVal);
-  }, [upworkMode]);
+  }, [upworkMode, text]);
 
   const handlePaste = useCallback((e) => {
     if (upworkMode) {
