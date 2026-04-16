@@ -9,6 +9,7 @@ export default function TextForm({ heading }) {
   const [isFontDropdownOpen, setIsFontDropdownOpen] = useState(false);
   const [showInfoPopup, setShowInfoPopup] = useState(false);
   const dropdownRef = useRef(null);
+  const isPastingRef = useRef(false);
   const { showAlert } = useTheme();
 
   useEffect(() => {
@@ -25,6 +26,7 @@ export default function TextForm({ heading }) {
   const readingTime = useMemo(() => getReadingTime(text), [text]);
 
   const handleChange = useCallback((e) => {
+    if (isPastingRef.current) return;
     let newVal = e.target.value;
     if (upworkMode) {
       newVal = toBoldText(newVal);
@@ -36,11 +38,15 @@ export default function TextForm({ heading }) {
   const handlePaste = useCallback((e) => {
     if (upworkMode) {
       e.preventDefault();
+      isPastingRef.current = true;
       const pastedData = e.clipboardData.getData('text');
       const bolded = toBoldText(pastedData);
       setText(bolded);
       navigator.clipboard.writeText(bolded).catch(() => {});
       showAlert('Text overwritten, auto-bolded & copied!', 'Success');
+      setTimeout(() => {
+        isPastingRef.current = false;
+      }, 50);
     }
   }, [upworkMode, showAlert]);
 
