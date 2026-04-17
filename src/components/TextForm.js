@@ -188,7 +188,7 @@ export default function TextForm({ heading }) {
                       onClick={(e) => e.stopPropagation()}
                     >
                       <div style={{ fontWeight: 600, marginBottom: '0.4rem', color: 'var(--accent-primary)', fontSize: '0.9rem' }}>Upwork Mode</div>
-                      Automatically converts your typed or pasted text to <strong>bold</strong> and instantly copies it to your clipboard.
+                      Automatically converts your typed or pasted text to <strong>bold</strong> and instantly copies it to your clipboard. It also automatically clears your previous input when new text is pasted.
                       <div style={{ marginTop: '0.75rem', display: 'flex', justifyContent: 'flex-end' }}>
                         <button 
                           onClick={(e) => { e.stopPropagation(); setShowInfoPopup(false); }}
