@@ -72,9 +72,9 @@ export default function Navbar({ title = 'UpworkUtils', aboutText = 'About' }) {
             </li>
           </ul>
           <div className="d-none d-lg-flex align-items-center">
-            <div className="form-check form-switch mb-0">
+            <div className="form-check form-switch mb-0 d-flex align-items-center gap-2" style={{ paddingLeft: 0 }}>
               <input
-                className="form-check-input"
+                className="form-check-input m-0"
                 onChange={toggleMode}
                 type="checkbox"
                 role="switch"
@@ -82,7 +82,7 @@ export default function Navbar({ title = 'UpworkUtils', aboutText = 'About' }) {
                 checked={isDark}
                 aria-label="Toggle dark mode"
               />
-              <label className="form-check-label" htmlFor="darkModeSwitch">
+              <label className="form-check-label m-0" htmlFor="darkModeSwitch" style={{ lineHeight: 1 }}>
                 {isDark ? '☀️ Light' : '🌙 Dark'}
               </label>
             </div>
