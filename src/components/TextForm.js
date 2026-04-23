@@ -5,7 +5,10 @@ import { countWords, getReadingTime, removeExtraSpaces, toTitleCase, reverseText
 export default function TextForm({ heading }) {
   const [text, setText] = useState('');
   const [fontFamily, setFontFamily] = useState('inherit');
-  const [upworkMode, setUpworkMode] = useState(true);
+  const [upworkMode, setUpworkMode] = useState(() => {
+    const saved = localStorage.getItem('upworkMode');
+    return saved !== null ? saved === 'true' : true;
+  });
   const [isFontDropdownOpen, setIsFontDropdownOpen] = useState(false);
   const [showInfoPopup, setShowInfoPopup] = useState(false);
   const dropdownRef = useRef(null);
@@ -139,6 +142,7 @@ export default function TextForm({ heading }) {
                 onChange={(e) => {
                   const isChecked = e.target.checked;
                   setUpworkMode(isChecked);
+                  localStorage.setItem('upworkMode', isChecked.toString());
                   showAlert(`Upwork Mode (Auto Bold) ${isChecked ? 'Enabled' : 'Disabled'}`, 'Success');
                   if (isChecked && text.length > 0) {
                     const bolded = toBoldText(text);

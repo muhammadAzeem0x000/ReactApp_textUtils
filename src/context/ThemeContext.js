@@ -3,7 +3,15 @@ import { createContext, useContext, useState, useCallback } from 'react';
 const ThemeContext = createContext();
 
 export function ThemeProvider({ children }) {
-  const [mode, setMode] = useState('dark');
+  const [mode, setMode] = useState(() => {
+    const savedMode = localStorage.getItem('themeMode');
+    if (savedMode) {
+      document.documentElement.setAttribute('data-theme', savedMode);
+      return savedMode;
+    }
+    document.documentElement.setAttribute('data-theme', 'dark');
+    return 'dark';
+  });
   const [alert, setAlert] = useState(null);
 
   const showAlert = useCallback((message, type) => {
@@ -15,6 +23,7 @@ export function ThemeProvider({ children }) {
     setMode((prev) => {
       const next = prev === 'light' ? 'dark' : 'light';
       document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('themeMode', next);
       showAlert(`${next === 'dark' ? 'Dark' : 'Light'} mode is enabled`, 'Success');
       return next;
     });
