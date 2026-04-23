@@ -70,6 +70,15 @@ export default function Navbar({ title = 'UpworkUtils', aboutText = 'About' }) {
                 {aboutText}
               </Link>
             </li>
+            <li className="nav-item">
+              <Link
+                className={`nav-link ${location.pathname === '/write-proposal' ? 'active' : ''}`}
+                to="/write-proposal"
+                onClick={collapseNav}
+              >
+                Write Proposal
+              </Link>
+            </li>
           </ul>
           <div className="d-none d-lg-flex align-items-center">
             <div className="form-check form-switch mb-0 d-flex align-items-center gap-2" style={{ paddingLeft: 0 }}>
