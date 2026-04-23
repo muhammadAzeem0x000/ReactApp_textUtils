@@ -5,7 +5,7 @@ import { countWords, getReadingTime, removeExtraSpaces, toTitleCase, reverseText
 export default function TextForm({ heading }) {
   const [text, setText] = useState('');
   const [fontFamily, setFontFamily] = useState('inherit');
-  const [upworkMode, setUpworkMode] = useState(false);
+  const [upworkMode, setUpworkMode] = useState(true);
   const [isFontDropdownOpen, setIsFontDropdownOpen] = useState(false);
   const [showInfoPopup, setShowInfoPopup] = useState(false);
   const dropdownRef = useRef(null);
