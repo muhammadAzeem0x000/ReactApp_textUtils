@@ -293,27 +293,31 @@ export default function TextForm({ heading }) {
         </div>
 
         <div className="button-group">
-          <button disabled={isDisabled} className="btn btn-primary" onClick={handleUpperCase}>
-            UPPERCASE
-          </button>
-          <button disabled={isDisabled} className="btn btn-primary" onClick={handleLowerCase}>
-            lowercase
-          </button>
-          <button disabled={isDisabled} className="btn btn-primary" onClick={handleTitleCase}>
-            Title Case
-          </button>
-          <button disabled={isDisabled} className="btn btn-secondary" onClick={handleReverse}>
-            Reverse
-          </button>
-          <button disabled={isDisabled} className="btn btn-secondary" onClick={handleRemoveSpaces}>
-            Remove Spaces
-          </button>
-          <button disabled={isDisabled} className="btn btn-bold" onClick={handleBold}>
-            𝗕 Bold
-          </button>
-          <button disabled={isDisabled} className="btn btn-bold-outline" onClick={handleUnbold}>
-            Unbold
-          </button>
+          {!upworkMode && (
+            <>
+              <button disabled={isDisabled} className="btn btn-primary" onClick={handleUpperCase}>
+                UPPERCASE
+              </button>
+              <button disabled={isDisabled} className="btn btn-primary" onClick={handleLowerCase}>
+                lowercase
+              </button>
+              <button disabled={isDisabled} className="btn btn-primary" onClick={handleTitleCase}>
+                Title Case
+              </button>
+              <button disabled={isDisabled} className="btn btn-secondary" onClick={handleReverse}>
+                Reverse
+              </button>
+              <button disabled={isDisabled} className="btn btn-secondary" onClick={handleRemoveSpaces}>
+                Remove Spaces
+              </button>
+              <button disabled={isDisabled} className="btn btn-bold" onClick={handleBold}>
+                𝗕 Bold
+              </button>
+              <button disabled={isDisabled} className="btn btn-bold-outline" onClick={handleUnbold}>
+                Unbold
+              </button>
+            </>
+          )}
           <button disabled={isDisabled} className="btn btn-info" onClick={handleCopy}>
             📋 Copy
           </button>
