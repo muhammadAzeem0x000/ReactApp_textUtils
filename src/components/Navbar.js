@@ -2,7 +2,7 @@ import { useRef, useCallback } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from '../context/ThemeContext';
 
-export default function Navbar({ title = 'UpworkUtils', aboutText = 'About' }) {
+export default function Navbar({ title = 'UpworkUtils' }) {
   const { mode, toggleMode } = useTheme();
   const location = useLocation();
   const isDark = mode === 'dark';
@@ -59,15 +59,6 @@ export default function Navbar({ title = 'UpworkUtils', aboutText = 'About' }) {
                 onClick={collapseNav}
               >
                 Home
-              </Link>
-            </li>
-            <li className="nav-item">
-              <Link
-                className={`nav-link ${location.pathname === '/about' ? 'active' : ''}`}
-                to="/about"
-                onClick={collapseNav}
-              >
-                {aboutText}
               </Link>
             </li>
             <li className="nav-item">
