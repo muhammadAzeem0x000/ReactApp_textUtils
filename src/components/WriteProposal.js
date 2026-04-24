@@ -76,16 +76,15 @@ export default function WriteProposal() {
           ref={textareaRef}
           value={text}
           onChange={(e) => setText(e.target.value)}
-          onMouseUp={handleSelection}
-          onKeyUp={(e) => {
-            // Trigger selection on keyboard selection commands (Shift + Arrow keys)
-            if (e.shiftKey && ['ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown'].includes(e.key)) {
+          onKeyDown={(e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'b') {
+              e.preventDefault();
               handleSelection();
             }
           }}
           className="form-control text-area proposal-textarea"
           rows={16}
-          placeholder="Paste or write your entire proposal here...&#10;&#10;✨ Magic Select: Just highlight any text to instantly make it bold!&#10;🔄 Undo: Highlight the bolded text again to revert it."
+          placeholder="Paste or write your entire proposal here...&#10;&#10;✨ Bold Text: Highlight any text and press Ctrl+B (or Cmd+B) to make it bold!&#10;🔄 Undo: Highlight the bolded text and press Ctrl+B again to revert it."
         />
       </div>
     </div>
