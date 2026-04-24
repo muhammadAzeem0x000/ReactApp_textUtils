@@ -4,6 +4,7 @@ import Navbar from './components/Navbar';
 import Alert from './components/Alerts';
 import TextForm from './components/TextForm';
 import WriteProposal from './components/WriteProposal';
+import Footer from './components/Footer';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" element={<TextForm heading="Enter the text to analyze" />} />
           </Routes>
         </div>
+        <Footer />
       </ThemeProvider>
     </Router>
   );
