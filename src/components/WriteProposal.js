@@ -1,12 +1,25 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { useTheme } from '../context/ThemeContext';
 import { toBoldText, fromBoldText } from '../utils/textHelpers';
 
 export default function WriteProposal() {
   const [text, setText] = useState('');
   const [showInfoPopup, setShowInfoPopup] = useState(false);
+  const [fontFamily, setFontFamily] = useState('inherit');
+  const [isFontDropdownOpen, setIsFontDropdownOpen] = useState(false);
   const textareaRef = useRef(null);
+  const dropdownRef = useRef(null);
   const { showAlert } = useTheme();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsFontDropdownOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleSelection = useCallback(() => {
     const el = textareaRef.current;
@@ -57,6 +70,17 @@ export default function WriteProposal() {
       showAlert('Failed to copy', 'Danger');
     }
   };
+
+  const fontOptions = [
+    { label: 'Default', value: 'inherit' },
+    { label: 'Arial', value: 'Arial, sans-serif' },
+    { label: 'Times New Roman', value: '"Times New Roman", Times, serif' },
+    { label: 'Courier New', value: '"Courier New", Courier, monospace' },
+    { label: 'Verdana', value: 'Verdana, Geneva, sans-serif' },
+    { label: 'Georgia', value: 'Georgia, serif' },
+    { label: 'Trebuchet MS', value: '"Trebuchet MS", Helvetica, sans-serif' },
+    { label: 'Impact', value: 'Impact, Charcoal, sans-serif' }
+  ];
 
   return (
     <div className="proposal-container fade-in">
@@ -119,13 +143,77 @@ export default function WriteProposal() {
             )}
           </span>
         </h1>
-        <div className="proposal-controls">
-          <button className="btn btn-info me-2" onClick={handleCopy} disabled={!text}>
-            📋 Copy All
-          </button>
-          <button className="btn btn-outline-danger" onClick={handleClear} disabled={!text}>
-            ✕ Clear
-          </button>
+        <div className="proposal-controls d-flex align-items-center flex-wrap gap-3">
+          <div className="position-relative d-flex align-items-center" ref={dropdownRef}>
+            <span 
+              className="position-absolute" 
+              style={{ left: '1rem', pointerEvents: 'none', fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-muted)' }}
+            >
+              Font:
+            </span>
+            <div 
+              className={`form-select font-select-modern position-relative d-flex align-items-center ${isFontDropdownOpen ? 'focus' : ''}`}
+              onClick={() => setIsFontDropdownOpen(!isFontDropdownOpen)}
+              style={{ paddingLeft: '3.6rem', paddingRight: '2.5rem', minWidth: '170px', cursor: 'pointer', userSelect: 'none', backgroundColor: 'var(--bg-card)' }}
+            >
+              <span style={{ fontFamily: fontFamily, display: 'inline-block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%' }}>
+                {fontOptions.find(f => f.value === fontFamily)?.label || 'Default'}
+              </span>
+            </div>
+            <span 
+              className="position-absolute" 
+              style={{ right: '1rem', pointerEvents: 'none', fontSize: '0.75rem', color: 'var(--text-muted)', zIndex: 10, transform: isFontDropdownOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }}
+            >
+              ▼
+            </span>
+            
+            {isFontDropdownOpen && (
+              <div 
+                className="custom-dropdown-menu position-absolute w-100" 
+                style={{ 
+                  top: '100%', 
+                  left: 0, 
+                  marginTop: '0.5rem', 
+                  backgroundColor: 'var(--bg-card)', 
+                  border: '2px solid var(--border-color)', 
+                  borderRadius: 'var(--radius)', 
+                  boxShadow: 'var(--shadow-lg)', 
+                  zIndex: 1000,
+                  overflow: 'hidden'
+                }}
+              >
+                {fontOptions.map((font) => (
+                  <div 
+                    key={font.value} 
+                    className="custom-dropdown-item"
+                    onClick={() => {
+                      setFontFamily(font.value);
+                      setIsFontDropdownOpen(false);
+                    }}
+                    style={{ 
+                      padding: '0.5rem 1rem', 
+                      fontFamily: font.value, 
+                      cursor: 'pointer',
+                      backgroundColor: fontFamily === font.value ? 'var(--bg-secondary)' : 'transparent',
+                      color: fontFamily === font.value ? 'var(--accent-primary)' : 'var(--text-primary)',
+                      transition: 'background-color 0.2s, color 0.2s',
+                      fontWeight: fontFamily === font.value ? 600 : 500
+                    }}
+                  >
+                    {font.label}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+          <div className="d-flex align-items-center">
+            <button className="btn btn-info me-2" onClick={handleCopy} disabled={!text}>
+              📋 Copy All
+            </button>
+            <button className="btn btn-outline-danger" onClick={handleClear} disabled={!text}>
+              ✕ Clear
+            </button>
+          </div>
         </div>
       </div>
       
@@ -142,6 +230,7 @@ export default function WriteProposal() {
           }}
           className="form-control text-area proposal-textarea"
           rows={16}
+          style={{ fontFamily }}
           placeholder="Paste or write your entire proposal here...&#10;&#10;✨ Bold Text: Highlight any text and press Ctrl+B (or Cmd+B) to make it bold!&#10;🔄 Undo: Highlight the bolded text and press Ctrl+B again to revert it."
         />
       </div>
