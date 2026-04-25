@@ -145,16 +145,10 @@ export default function WriteProposal() {
         </h1>
         <div className="proposal-controls d-flex align-items-center flex-wrap gap-3">
           <div className="position-relative d-flex align-items-center" ref={dropdownRef}>
-            <span 
-              className="position-absolute" 
-              style={{ left: '1rem', pointerEvents: 'none', fontWeight: 600, fontSize: '0.95rem', color: 'var(--text-muted)' }}
-            >
-              Font:
-            </span>
             <div 
               className={`form-select font-select-modern position-relative d-flex align-items-center ${isFontDropdownOpen ? 'focus' : ''}`}
               onClick={() => setIsFontDropdownOpen(!isFontDropdownOpen)}
-              style={{ paddingLeft: '3.6rem', paddingRight: '2.5rem', minWidth: '170px', cursor: 'pointer', userSelect: 'none', backgroundColor: 'var(--bg-card)' }}
+              style={{ paddingLeft: '1rem', paddingRight: '2.5rem', minWidth: '150px', cursor: 'pointer', userSelect: 'none', backgroundColor: 'var(--bg-card)' }}
             >
               <span style={{ fontFamily: fontFamily, display: 'inline-block', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%' }}>
                 {fontOptions.find(f => f.value === fontFamily)?.label || 'Default'}
