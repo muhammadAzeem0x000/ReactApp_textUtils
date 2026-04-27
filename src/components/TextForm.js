@@ -332,10 +332,6 @@ export default function TextForm({ heading }) {
             <span className="stat-value">{text.length}</span>
             <span className="stat-label">Characters</span>
           </div>
-          <div className="stat-card">
-            <span className="stat-value">{readingTime}</span>
-            <span className="stat-label">Min Read</span>
-          </div>
         </div>
         <h3>Preview</h3>
         <p className="text-preview" style={{ fontFamily }}>{text.length > 0 ? text : 'Nothing to preview'}</p>
