@@ -3,7 +3,9 @@ import { useTheme } from '../context/ThemeContext';
 import { countWords, getReadingTime, removeExtraSpaces, toTitleCase, reverseText, toBoldText, fromBoldText } from '../utils/textHelpers';
 
 export default function TextForm({ heading }) {
-  const [text, setText] = useState('');
+  const [text, setText] = useState(() => {
+    return localStorage.getItem('homePageText') || '';
+  });
   const [fontFamily, setFontFamily] = useState('inherit');
   const [upworkMode, setUpworkMode] = useState(() => {
     const saved = localStorage.getItem('upworkMode');
@@ -24,6 +26,10 @@ export default function TextForm({ heading }) {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('homePageText', text);
+  }, [text]);
 
   const wordCount = useMemo(() => countWords(text), [text]);
   const readingTime = useMemo(() => getReadingTime(text), [text]);

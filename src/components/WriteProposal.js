@@ -3,7 +3,9 @@ import { useTheme } from '../context/ThemeContext';
 import { toBoldText, fromBoldText } from '../utils/textHelpers';
 
 export default function WriteProposal() {
-  const [text, setText] = useState('');
+  const [text, setText] = useState(() => {
+    return localStorage.getItem('writeProposalText') || '';
+  });
   const [showInfoPopup, setShowInfoPopup] = useState(false);
   const [fontFamily, setFontFamily] = useState('inherit');
   const [isFontDropdownOpen, setIsFontDropdownOpen] = useState(false);
@@ -20,6 +22,10 @@ export default function WriteProposal() {
     document.addEventListener('mousedown', handleClickOutside);
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    localStorage.setItem('writeProposalText', text);
+  }, [text]);
 
   const handleSelection = useCallback(() => {
     const el = textareaRef.current;
