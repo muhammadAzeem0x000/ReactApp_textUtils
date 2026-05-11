@@ -236,7 +236,7 @@ export default function WriteProposal() {
           placeholder="Paste or write your entire proposal here...&#10;&#10;✨ Bold Text: Highlight any text and press Ctrl+B (or Cmd+B) to make it bold!&#10;🔄 Undo: Highlight the bolded text and press Ctrl+B again to revert it."
         />
       </div>
-      <div className="text-muted mt-2 d-flex justify-content-end" style={{ fontSize: '0.85rem', fontWeight: 500, paddingRight: '4px' }}>
+      <div className="mt-2 d-flex justify-content-end" style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', fontWeight: 500, paddingRight: '4px' }}>
         {wordCount} {wordCount === 1 ? 'word' : 'words'} | {text.length} {text.length === 1 ? 'character' : 'characters'}
       </div>
     </div>
